@@ -1,29 +1,53 @@
-<h1>Register</h1>
-<% if(typeof errors!= 'undefined') { %>
-  <%    errors.forEach(function(error){ %>
-  <p> <%= error.msg %></p>
-  <%    })        %>
-  <% } %>
-<form action="/users/register" method="POST">
-<div>
-    <label for="username">Name</label>
-    <input
-      type="username"
-      name="username"
-      placeholder="Enter Username"
-    />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link href="/css/form_styles.css" rel="stylesheet" />
+</head>
+
+</html>
+<body>
+
+  <div class="container">
+
+    <form action="/users/register" method="POST">
   
-</div>
-  <div >
-    <label for="password">Password</label>
-    <input
-      type="password"
-      name="password"
-      placeholder="Create Password"
-    />
+      <h1>Create Account</h1>
+      <% if(typeof errors!= 'undefined') { %>
+        <%    errors.forEach(function(error){ %>
+        <p class="error"> <%= error.msg %></p>
+        <% }) %>
+      <% } %> 
+      <div class="form-group">
+        <label for="username" id="n">Name</label>
+        <input
+          type="username"
+          name="username"
+          placeholder="Enter Username"
+          class="form-control"
+        />
+      </div>
+
+      <div class="form-group" >
+        <label for="password" id="n">Password</label>
+        <input
+          type="password"
+          name="password"
+          placeholder="Create Password"
+          class="form-control"
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block">
+        Register
+      </button>
+
+      <p >Already have An Account? <a href="/login">Login</a></p>
+    </form>
+
   </div>
-  <button type="submit" class="btn btn-primary btn-block">
-    Register
-  </button>
-</form>
-<p >Have An Account? <a href="/login">Login</a></p>
+
+</body>

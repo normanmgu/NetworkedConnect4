@@ -32,6 +32,13 @@ app.use(session({
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
+app.use(flash());
+app.use((req,res,next)=> {
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('error_msg');
+    res.locals.error  = req.flash('error');
+    next();
+})
 
 // Passport.js Setup
 app.use(passport.initialize());
@@ -48,7 +55,7 @@ function isLoggedOut(req, res, next) {
 }
 
 // Controllers
-const homePageController = require("./controllers/home");
+const homePageController = require("./controllers/dashboard");
 const getLoginPageController = require("./controllers/getLogin");
 const getRegisterPageController = require("./controllers/getRegister");
 const newUserController = require("./controllers/newUser");
@@ -64,7 +71,8 @@ app.post("/users/register", newUserController);
 
 app.post('/users/login', passport.authenticate('local', {
 	successRedirect: '/',
-	failureRedirect: '/login?error=true'
+	failureRedirect: '/login?error=true',
+    failureFlash: true
 }));
 
 app.delete("/users/logout", (req, res, next) =>{
