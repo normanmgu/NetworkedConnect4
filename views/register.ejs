@@ -1,0 +1,29 @@
+<h1>Register</h1>
+<% if(typeof errors!= 'undefined') { %>
+  <%    errors.forEach(function(error){ %>
+  <p> <%= error.msg %></p>
+  <%    })        %>
+  <% } %>
+<form action="/users/register" method="POST">
+<div>
+    <label for="username">Name</label>
+    <input
+      type="username"
+      name="username"
+      placeholder="Enter Username"
+    />
+  
+</div>
+  <div >
+    <label for="password">Password</label>
+    <input
+      type="password"
+      name="password"
+      placeholder="Create Password"
+    />
+  </div>
+  <button type="submit" class="btn btn-primary btn-block">
+    Register
+  </button>
+</form>
+<p >Have An Account? <a href="/login">Login</a></p>
