@@ -1,3 +1,6 @@
 <html>
 <h1>Hello <%= username %></h1>
+<form action="/users/logout?_method=DELETE" method="POST">
+    <button type="submit">Log Out</button>
+</form>
 </html>
