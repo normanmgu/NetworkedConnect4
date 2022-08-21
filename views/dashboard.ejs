@@ -1,6 +1,23 @@
 <html>
 <h1>Dashboard</h1>
 <p>Hello <%= username %></p>
+<h3>Friends</h3>
+
+<% if(friends.length > 0) { %>
+    <% for(let i = 0; i < friends.length; i++) { %>
+        <li> <%= friends[i] %> </li>
+    <% } %>
+<% } %>
+<% if(friends.length === 0) { %>
+    <p>No friends</p>
+<% } %>
+
+<h2>Pending Friend Requests</h2>
+<div class="friendRequest-container"></div>
+
+<a href="/addFriend">Add Friend</a>
+
+
 <form action="/users/logout?_method=DELETE" method="POST">
     <button type="submit">Log Out</button>
 </form>

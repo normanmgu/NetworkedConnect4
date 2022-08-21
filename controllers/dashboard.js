@@ -1,6 +1,11 @@
 module.exports = (req, res)  =>{
-    console.log(req.session.passport.user);
     let username = req.user.username;
+    let friends = req.user.friends
+
     console.log("username: ", username);
-	res.render("dashboard", { username: username });
+    console.log("current sessions user id: " + req.user._id);
+	res.render("dashboard", {
+        username: username,
+        friends: friends
+    });
 }

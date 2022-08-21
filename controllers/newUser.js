@@ -2,8 +2,8 @@ const User = require("../models/User");
 
 module.exports = (req, res) =>{
     const { username, password } = req.body;
+
     let errors = []; // Holds an array of all errors to display if needed
-    console.log(req.body);
     if(!username || !password) {
         errors.push({ msg: "Please fill in all fields." });
     }
@@ -16,21 +16,20 @@ module.exports = (req, res) =>{
             errors: errors
         })
     }
-    else {
-        User.findOne({ username:username }, (err, user) =>{
-            console.log(user);
-            if(user) {
-                console.log("user already exists");
-                return res.redirect("/register");
-            }
-            else {
-                User.create(req.body, (err, user) =>{
-                    console.log("User: ", user);
-                    if(err) console.log(err);
-                })
 
-                return res.redirect("/");
-            }
-        })
-    }
+    User.findOne({ username:username }, (err, user) =>{
+        console.log(user);
+        if(user) {
+            console.log("user already exists");
+            return res.redirect("/register");
+        }
+        else {
+            User.create(req.body, (err, user) =>{
+                console.log("User: ", user);
+                if(err) console.log(err);
+            })
+
+            return res.redirect("/");
+        }
+    })
 }

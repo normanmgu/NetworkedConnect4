@@ -45,23 +45,19 @@ app.use(passport.initialize());
 app.use(passport.session());
 require("./middleware/passport-config");
 
-function isLoggedIn(req, res, next) {
-    if(req.isAuthenticated()) return next();
-    res.redirect("/login");
-}
-function isLoggedOut(req, res, next) {
-    if(!req.isAuthenticated()) return next();
-    res.redirect("/");
-}
-
 // Controllers
-const homePageController = require("./controllers/dashboard");
+const dashboardPageController = require("./controllers/dashboard");
 const getLoginPageController = require("./controllers/getLogin");
 const getRegisterPageController = require("./controllers/getRegister");
 const newUserController = require("./controllers/newUser");
+const getAddFriendController = require("./controllers/getAddFriend"); 
+const addFriendController = require("./controllers/addFriend");
+
+// CustomMiddleware
+const {isLoggedIn, isLoggedOut} = require("./middleware/isLoggedMiddleware");
 
 // ROUTES
-app.get('/',isLoggedIn, homePageController);
+app.get('/',isLoggedIn, dashboardPageController);
 
 app.get('/login', isLoggedOut, getLoginPageController);
 
@@ -80,6 +76,14 @@ app.delete("/users/logout", (req, res, next) =>{
         if (err) { return next(err)}
         res.redirect("/");
     });
+})
+
+app.get("/addFriend", isLoggedIn, getAddFriendController);
+
+app.post("/users/addFriend", isLoggedIn, addFriendController);
+
+app.use((req, res) =>{
+    res.send("<h1>404</h1>");
 })
 
 app.listen(3000, () =>{
