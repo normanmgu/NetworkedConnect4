@@ -7,11 +7,11 @@ const mongoose = require("mongoose");
  */
 const FriendsListSchema = new mongoose.Schema({
     requester: {
-        type: Object,
+        type: String,
         required: true
     },
     recipient: {
-        type: Object,
+        type: String,
         required: true
     },
     status: 0

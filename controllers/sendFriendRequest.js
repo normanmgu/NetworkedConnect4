@@ -2,6 +2,7 @@ const User = require("../models/User");
 const FriendRequest = require("../models/FriendRequest");
 
 module.exports = async (req, res) =>{
+
     const errors = []; // All errors to be displayed to client are pushed here
 
     // GET RECIPIENT

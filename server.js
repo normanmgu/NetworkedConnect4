@@ -1,3 +1,8 @@
+if(process.env.NODE_ENV !== "production") {
+    require("dotenv").config();
+}
+const port = process.env.PORT || 8080
+
 // Dependencies
 const express       = require("express");
 const session       = require("express-session");
@@ -51,7 +56,8 @@ const getLoginPageController = require("./controllers/getLogin");
 const getRegisterPageController = require("./controllers/getRegister");
 const newUserController = require("./controllers/newUser");
 const getAddFriendController = require("./controllers/getAddFriend"); 
-const addFriendController = require("./controllers/addFriend");
+const sendFriendRequestController = require("./controllers/sendFriendRequest");
+const pendingFriendRequestController = require("./controllers/pendingRequest");
 
 // CustomMiddleware
 const {isLoggedIn, isLoggedOut} = require("./middleware/isLoggedMiddleware");
@@ -62,6 +68,8 @@ app.get('/',isLoggedIn, dashboardPageController);
 app.get('/login', isLoggedOut, getLoginPageController);
 
 app.get('/register', getRegisterPageController);
+
+app.get('/pendingRequests', isLoggedIn, pendingFriendRequestController);
 
 app.post("/users/register", newUserController);
 
@@ -80,12 +88,12 @@ app.delete("/users/logout", (req, res, next) =>{
 
 app.get("/addFriend", isLoggedIn, getAddFriendController);
 
-app.post("/users/addFriend", isLoggedIn, addFriendController);
+app.post("/users/sendFriendRequest", isLoggedIn, sendFriendRequestController);
 
 app.use((req, res) =>{
     res.send("<h1>404</h1>");
 })
 
-app.listen(3000, () =>{
+app.listen(port, () =>{
     console.log("app listening on port 3000")
 })
