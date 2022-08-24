@@ -13,7 +13,9 @@
         <input type="text" placeholder="Add Tasks">
         <button id="push">Add</button>
     </div> -->
-    <h2>Friend Requests</h2>
+    <div>
+        <h2>Friend Requests</h2>
+    </div>
     <div id="tasks">
 
 
@@ -21,19 +23,23 @@
             <% users.forEach((user) =>{ %>
 
                 <div class="task">
-                    <span id="taskname">
+                    <span class="taskname">
                         <%= user.username %>
                     </span>
-                    <button class="delete">
-                        <i class="far fa-trash-alt"></i>
+                    <p class="id"> <%=user._id %> </p>
+                    <button class="accept">
+                        <!-- <i class="far fa-trash-alt"></i> -->
+                        Yes
                     </button>
-                    <button class="delete">
-                        <i class="far fa-trash-alt"></i>
+                    <button class="reject">
+                        <!-- <i class="far fa-trash-alt"></i> -->
+                        No
                     </button>
                 </div> 
 
             <% }) %>
         <% } %>
+        <a href="/">Go Back</a>
     </div>
 </div>
     

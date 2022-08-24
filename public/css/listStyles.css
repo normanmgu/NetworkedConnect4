@@ -7,11 +7,12 @@
 }
 h2 {
     font-family: 'Poppins',sans-serif;
-    
+    margin: 1rem;
 }
 body{
     height: 100vh;
-    background: #67acf1;
+    background: #eee;
+    font-family: 'Poppins',sans-serif;
 }
 .container{
     width: 40%;
@@ -75,7 +76,6 @@ body{
     align-items: center;
     justify-content: space-between;
     border: 1px solid #939697;
-    cursor: pointer;
     background-color: #d1d1d1;
     height: 50px;
     margin-bottom: 8px;

@@ -1,22 +1,45 @@
-<html>
-<h1>Dashboard</h1>
-<p>Hello <%= username %></p>
-<h3>Friends</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="/css/dashboard_styles.css" rel="stylesheet" />
+</head>
 
-<% if(friends.length > 0) { %>
-    <% for(let i = 0; i < friends.length; i++) { %>
-        <li> <%= friends[i] %> </li>
-    <% } %>
-<% } %>
-<% if(friends.length === 0) { %>
-    <p>No friends</p>
-<% } %>
-
-<a href="/pendingRequests">View Pending Friend Requests</a>
-<a href="/addFriend">Add Friend</a>
-
-
-<form action="/users/logout?_method=DELETE" method="POST">
-    <button type="submit">Log Out</button>
-</form>
+<div class="wrapper">
+    <h1>NETWORKED TIC TAC TOE</h1>
+    <header>SESSION USERNAME: <b><%= username %></b></header>
+    <nav>
+        <div class="link-containers">
+            <a href="/null">Play Game</a>
+        </div>
+        <br>
+        <div class="link-containers">
+            <a href="/pendingRequests">View Pending Friend Requests</a>
+        </div>
+        <br>
+        <div class="link-containers">
+            <a href="/addFriend">Add Friend</a>
+        </div>
+        <br>
+        <div class="link-containers">
+            <form action="/users/logout?_method=DELETE" method="POST">
+                <button type="submit">Log Out</button>
+            </form>
+        </div>
+    </nav>
+    <section>
+        <% if(friends.length > 0) { %>
+            <% for(let i = 0; i < friends.length; i++) { %>
+                <li> <%= friends[i] %> </li>
+            <% } %>
+        <% } %>
+        <% if(friends.length === 0) { %>
+            <p>No friends</p>
+        <% } %>
+    </section>
+    </div>
+<br>
 </html>
