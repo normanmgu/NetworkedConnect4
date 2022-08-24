@@ -10,9 +10,13 @@ module.exports = async (req, res) =>{
     let friendRequests = [];
     try {
         friendRequests = await FriendRequest.find( { recipient: userID } );
+        if(friendRequests.length === 0) throw Error("No Request");
     }
     catch(e) {
         console.log(e);
+        res.render("pendingFriendRequest", {
+            users: null
+        })
     }
 
     // Render Friend Request to Client

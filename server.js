@@ -58,6 +58,8 @@ const newUserController = require("./controllers/newUser");
 const getAddFriendController = require("./controllers/getAddFriend"); 
 const sendFriendRequestController = require("./controllers/sendFriendRequest");
 const pendingFriendRequestController = require("./controllers/pendingRequest");
+const acceptRequestController = require("./controllers/requestResponseControllers/accept");
+const rejectRequestController = require("./controllers/requestResponseControllers/reject");
 
 // CustomMiddleware
 const {isLoggedIn, isLoggedOut} = require("./middleware/isLoggedMiddleware");
@@ -89,6 +91,10 @@ app.delete("/users/logout", (req, res, next) =>{
 app.get("/addFriend", isLoggedIn, getAddFriendController);
 
 app.post("/users/sendFriendRequest", isLoggedIn, sendFriendRequestController);
+
+app.post("/resolveRequest", isLoggedIn, acceptRequestController);
+
+app.delete("/resolveRequest", isLoggedIn, rejectRequestController);
 
 app.use((req, res) =>{
     res.send("<h1>404</h1>");

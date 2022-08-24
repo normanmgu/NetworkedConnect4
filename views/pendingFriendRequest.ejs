@@ -39,9 +39,14 @@
 
             <% }) %>
         <% } %>
+        <% if(!users) { %>
+            <p>No Requests</p>
+        <% } %>
         <a href="/">Go Back</a>
     </div>
 </div>
     
+<script src="/js/resolveRequest.js"></script>
 </body>
+
 </html>
