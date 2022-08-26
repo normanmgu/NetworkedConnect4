@@ -31,14 +31,22 @@
         </div>
     </nav>
     <section>
+        <p><b>Challenge a Friend</b></p>
+        <form>
         <% if(friends.length > 0) { %>
             <% for(let i = 0; i < friends.length; i++) { %>
-                <li> <%= friends[i] %> </li>
+                <input type="radio" name="friend" value="<%= friends[i] %>">
+                <label for="<%= i %>"><%=friends[i] %></label>
+                <br>
             <% } %>
         <% } %>
         <% if(friends.length === 0) { %>
             <p>No friends</p>
         <% } %>
+        <% if(friends.length > 0)  {%>
+            <button type="submit">DUEL!</button>
+        <% } %>
+        </form>
     </section>
     </div>
 <br>

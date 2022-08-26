@@ -8,10 +8,15 @@ async function resolveRequest(id, method) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({id})
+            body: JSON.stringify({id: id})
         })
-        if(response) console.log("success");
-        if(!response.ok) throw Error("SOMETHING WENT WRONG")
+        if(response) {
+            console.log("this should refresh")
+            window.location.reload();
+        } 
+        console.log(response.ok)
+        if(!response.ok) throw Error("SOMETHING WENT WRONG");
+
     }
 
     catch(e){
@@ -31,6 +36,6 @@ for(let i = 0; i< accepted.length; i++){
 const rejected = document.getElementsByClassName("reject");
 for(let i = 0; i< rejected.length; i++){
     rejected[i].onclick = function(){
-        resolveRequest(rejected[i].previousElementSibling.innerHTML, "DELETE");
+        resolveRequest(rejected[i].previousElementSibling.previousElementSibling.innerHTML, "DELETE");
     }
 }
