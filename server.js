@@ -2,6 +2,9 @@ if(process.env.NODE_ENV !== "production") {
     require("dotenv").config();
 }
 const port = process.env.PORT || 8080
+let ip;
+if(process.env.LAN === "true") ip = require("ip").address();
+else ip = "localhost";
 
 // Dependencies
 const express       = require("express");
@@ -20,7 +23,7 @@ mongoose.connect("mongodb://localhost/my_database", {
     useUnifiedTopology: true
 })
 .then(() =>{
-    console.log("connected... ");
+    console.log("connected to my_database... ");
 })
 .catch(err =>{
     if(err) console.log(err);
@@ -63,6 +66,7 @@ const rejectRequestController = require("./controllers/requestResponseController
 
 // CustomMiddleware
 const {isLoggedIn, isLoggedOut} = require("./middleware/isLoggedMiddleware");
+const { isPrivate } = require("ip");
 
 // ROUTES
 app.get('/',isLoggedIn, dashboardPageController);
@@ -100,6 +104,6 @@ app.use((req, res) =>{
     res.send("<h1>404</h1>");
 })
 
-app.listen(port, () =>{
-    console.log("app listening on port 3000")
+app.listen(port, ip, () =>{
+    console.log(`listening on http://${ip}:${port}`);
 })

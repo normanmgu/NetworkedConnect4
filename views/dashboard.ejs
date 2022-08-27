@@ -36,7 +36,7 @@
         <% if(friends.length > 0) { %>
             <% for(let i = 0; i < friends.length; i++) { %>
                 <input type="radio" name="friend" value="<%= friends[i] %>">
-                <label for="<%= i %>"><%=friends[i] %></label>
+                <label for="<%= i %>"> <%=friends[i].username %> </label>
                 <br>
             <% } %>
         <% } %>

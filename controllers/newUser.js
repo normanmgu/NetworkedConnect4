@@ -11,7 +11,6 @@ module.exports = (req, res) =>{
         errors.push({ msg: "Password needs to be atleast 5 characters long." }); 
     }
     if(errors.length > 0) {
-        console.log("made it in here");
         return res.render("register", {
             errors: errors
         })
@@ -25,7 +24,7 @@ module.exports = (req, res) =>{
         }
         else {
             User.create(req.body, (err, user) =>{
-                console.log("User: ", user);
+                console.log("Created User: ", user);
                 if(err) console.log(err);
             })
 
