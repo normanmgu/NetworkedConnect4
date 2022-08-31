@@ -24,7 +24,11 @@ STATIC LAYOUT CSS
     width: 750px;
   }
   
-  
+ form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+ } 
   
   /**************************************
   CSS TO MAKE THE EXAMPLE LOOK PRETTY
@@ -60,5 +64,13 @@ STATIC LAYOUT CSS
   
   nav, section {
     padding: 200px 0;
+  }
+
+  .friend {
+    margin: 0.001rem;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 8px 16px rgba(0,0,0,.3);
+    width: 100%;
+    border-radius: 4px;
   }
   
