@@ -10,7 +10,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    friends: [String]
+    friends: [{
+        username: String,
+        id: String
+    }]
 });
 
 UserSchema.pre("save", function(next) {

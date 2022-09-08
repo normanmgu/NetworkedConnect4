@@ -13,7 +13,7 @@
     <header>SESSION USERNAME: <b><%= username %></b></header>
     <nav>
         <div class="link-containers">
-            <a href="/null">Play Game</a>
+            <a href="/game">Play Game</a>
         </div>
         <br>
         <div class="link-containers">
@@ -30,13 +30,14 @@
             </form>
         </div>
     </nav>
+
     <section>
         <p><b>Challenge a Friend</b></p>
-        <form>
+        <form action="/sendDuelRequest" method="POST">
         <% if(friends.length > 0) { %>
             <% for(let i = 0; i < friends.length; i++) { %>
             <div class="friend">
-                <input type="radio" name="friend" value="<%= friends[i] %>">
+                <input type="radio" name="friend" value="<%= friends[i].username +" "+friends[i].id %>">
                 <label for="<%= i %>"> <%=friends[i].username %> </label>
             </div>
                 <br>
@@ -50,6 +51,7 @@
         <% } %>
         </form>
     </section>
+
     </div>
 <br>
 </html>

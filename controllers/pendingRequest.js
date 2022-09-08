@@ -1,16 +1,15 @@
-const FriendRequest = require("../models/FriendRequest");
+const Request = require("../models/Request");
 const User = require("../models/User");
-const { ObjectId } = require('mongodb');
 
 module.exports = async (req, res) =>{
 
     const userID = req.user.id.toString();
 
     //Detect pending request
-    let friendRequests = [];
+    let Requests = [];
     try {
-        friendRequests = await FriendRequest.find( { recipient: userID } );
-        if(friendRequests.length === 0) throw Error("No Request");
+        Requests = await Request.find( { recipient: {username: req.user.username, id: userID}, status: 0 } );
+        if(Requests.length === 0) throw Error("No Request");
     }
     catch(e) {
         console.log(e);
@@ -22,11 +21,11 @@ module.exports = async (req, res) =>{
     // Render Friend Request to Client
     let users = []
     let i = 0
-    friendRequests.forEach(async (request) =>{
+    Requests.forEach(async (request) =>{
         try {
-            users.push(await User.findById(request.requester))
+            users.push(await User.findById(request.requester.id))
             i++;
-            if(i === friendRequests.length) {
+            if(i === Requests.length) {
                 return res.render("pendingFriendRequest", {
                     users: users
                 })
