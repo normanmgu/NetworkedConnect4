@@ -1,8 +1,8 @@
     const Request = require("../../models/Request");
 
     /**
-     * @param {{recipientUsername: String, recipientID: String}} recipientObj 
-     * @param {{requesterUsername: String, requesterId: String}} requesterObj 
+     * @param {{username: String, id: String}} recipientObj 
+     * @param {{username: String, id: String}} requesterObj 
      * @param {Number} requestType Set to 0 to indicate a Friend Request. Set to 1 to indicate Duel Request
      * @return Returns request object
      * @throws Throws error message if user is not found

@@ -1,6 +1,6 @@
-# TicTacToeExpress
+# Networked Connect 4
 
-TicTacToeExpress is a networked TicTacToe game that features a login system and friend request system. The actual game itself will be created with the help of socket.io.
+NetworkedConnect4 is a networked Connect 4 game that features a login system and a friend request system. Users send duels to their friends and on acceptance they are both forwarded to a page where they can play agaisnt each other. The actual game itself will be created with the help of socket.io.
 
 ## Installation
 
