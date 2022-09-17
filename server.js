@@ -44,7 +44,7 @@ mongoose.connect("mongodb://localhost/my_database", {
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(session({
-    secret: "biscuit",
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true
 }));
