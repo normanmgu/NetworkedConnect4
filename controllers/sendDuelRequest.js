@@ -1,49 +1,26 @@
-const User = require("../models/User");
-const Request = require("../models/Request");
-
-function parseInput(input) {
-    let inputArr = input.trim().split(/\s+/);
-    let username = inputArr[0];
-    let id = inputArr[1]; 
-    return { username, id };
-}
-
-module.exports = (req, res) =>{
-
-    const {username, id} = parseInput(req.body.friend);
+const sendRequest = require("../utils/requestHelpers/sendRequest");
+const parseInput = require("../utils/parseInput");
 
 
+module.exports = async (req, res) =>{
+
+    const { transceiver, username, id } = parseInput(req.body.duel);
 
     const errors = []; // All errors to be displayed to client are pushed here
 
-    // // GET RECIPIENT
-    // let recipient = {};
-    // try {
-    //     recipient = await User.findOne({username: req.body.username});
-    // }
-    // catch(e) {
-    //     // If fail to look up recipient
-    //     console.log(e);
-    //     errors.push({ msg: "Failed to find username."});
-
-    //     return res.redirect("/"); // }
-
-    // // CREATE REQUEST
-    // try {
-    //     const request =  await Request.create({
-    //         requester: req.user.id,
-    //         recipient: recipient._id.toString(),
-    //         status: 0 // status: FriendRequest
-    //     })
-    //     console.log(request);
-    //     return res.redirect("/");
-    // }
-    // catch(e) {
-    //     console.log(e)
-    //     errors.push({ msg: "Server Error: Please try again later." });
-    //     return res.render("addFriend",{
-    //         errors: errors
-    //     })
-    // }
+    try{
+        const request = await sendRequest(
+            { username: username, id: id },
+            { username: req.user.username, id: req.user.id },
+            1
+        );
+        console.log(request)
+        // Send user to a game room that should be the concatanation of their requester and recipiants id.
+        return res.redirect(`/game?transceiver=${transceiver}&opp_username=${username}&opp_id=${id}&username=${req.user.username}&id=${req.user.id}`);
+    }
+    catch(e) {
+        console.log(e);
+        return res.redirect("/");
+    }
 }
       

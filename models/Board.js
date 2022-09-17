@@ -1,0 +1,6 @@
+class Board {
+    constructor();
+    
+    createBoard();
+
+}

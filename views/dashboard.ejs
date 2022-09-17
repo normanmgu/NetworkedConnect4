@@ -31,13 +31,15 @@
         </div>
     </nav>
 
+
     <section>
+        <!-- Send Duel Request -->
         <p><b>Challenge a Friend</b></p>
         <form action="/sendDuelRequest" method="POST">
         <% if(friends.length > 0) { %>
             <% for(let i = 0; i < friends.length; i++) { %>
             <div class="friend">
-                <input type="radio" name="friend" value="<%= friends[i].username +" "+friends[i].id %>">
+                <input type="radio" name="duel" value="requester <%=friends[i].username +" "+friends[i].id %>">
                 <label for="<%= i %>"> <%=friends[i].username %> </label>
             </div>
                 <br>
@@ -50,8 +52,28 @@
             <button type="submit">DUEL!</button>
         <% } %>
         </form>
-    </section>
 
+        <!-- Accept Duel Request -->
+        <p><b>Pending Duel Request</b></p>
+        <form action="/acceptDuelRequest" method="POST">
+        <% if(duelRequests.length > 0) { %>
+            <% for(let i = 0; i < duelRequests.length; i++) { %>
+            <div class="friend">
+                <input type="radio" name="duel" value="recipient <%=duelRequests[i].requester.username +" "+duelRequests[i].requester.id %>">
+                <label for="<%= i %>"> <%=duelRequests[i].requester.username %> </label>
+            </div>
+                <br>
+            <% } %>
+        <% } %>
+        <% if(duelRequests.length === 0) { %>
+            <p>No Duels</p>
+        <% } %>
+        <% if(duelRequests.length > 0)  {%>
+            <button type="submit">ACCEPT DUEL!</button>
+        <% } %>
+        </form>
+
+    </section>
     </div>
 <br>
 </html>

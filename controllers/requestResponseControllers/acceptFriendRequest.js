@@ -1,49 +1,36 @@
-const Request = require("../../models/Request");
 const User = require("../../models/User");
+const acceptRequest = require("../../utils/requestHelpers/acceptRequest");
 
 module.exports = async (req, res) =>{
-    const currentUserId = req.user.id;
-    const requesterId = req.body.id;
 
-    let userExists;
-    //ERROR CHECKING
-    // if requester does not exist
-    userExists = await User.findById(requesterId);
-    if(!userExists) throw Error(`User ${requesterId} does not exist`);
     try {
-        //First the request must be deleted
-        Request.findOneAndDelete({
-            recipient: {
-                username: req.user.username,
-                id: currentUserId
-            },
-            requester: {
-                username: userExists.username,
-                id: requesterId
-            },
-            status: 0
-        }, (err, request) =>{
 
-            if(err) console.log(err);
-            if(request) console.log(request);
-        })
+        let requester = await User.findById(req.body.id);
+        if(!requester) throw Error(`Requester does not exist`);
 
+        let requestDeleted = acceptRequest(
+            { username: req.user.username, id: req.user.id},
+            { username: requester.username, id: requester._id.toString()},
+            0
+        )
+
+        if(!requestDeleted) throw new Error("Something went wrong.");
         // if user already has the friend
         req.user.friends.forEach((friend) =>{
             if(friend.id === requesterId) {
-                throw Error(`Duplicate friend ${requesterId}`);
+                throw Error(`Duplicate friend ${requester._id.toString()}`);
             }
         })
 
         // Add friend to current session user
-        User.findByIdAndUpdate(currentUserId,{$push: {friends: {username: userExists.username, id: requesterId}}},
+        User.findByIdAndUpdate(req.user.id,{$push: {friends: {username: requester.username, id: requester._id.toString()}}},
             (err, user) =>{
             if(err) console.log(err);
             if(user) console.log(user);
         });
 
         // Add Friend to requester
-        User.findByIdAndUpdate(requesterId,{$push: {friends: {username: req.user.username, id: currentUserId}}},
+        User.findByIdAndUpdate(requester._id.toString(),{$push: {friends: {username: req.user.username, id: req.user.id}}},
             (err,user) =>{
             if(err) console.log(err);
             if(user) console.log(user);

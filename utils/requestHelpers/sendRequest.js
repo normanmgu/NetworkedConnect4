@@ -1,11 +1,11 @@
     const Request = require("../../models/Request");
 
-    /**
+    /** 
      * @param {{username: String, id: String}} recipientObj 
      * @param {{username: String, id: String}} requesterObj 
      * @param {Number} requestType Set to 0 to indicate a Friend Request. Set to 1 to indicate Duel Request
      * @return Returns request object
-     * @throws Throws error message if user is not found
+     * @throws Throws error message if request fails to be created
      */
     async function sendRequest(recipientObj, requesterObj, requestType) {
         try{
@@ -26,7 +26,7 @@
             return request;
         }
         catch(err) {
-            throw err;
+            throw Error(err);
         }
     }
 

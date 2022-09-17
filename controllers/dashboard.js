@@ -1,16 +1,25 @@
-const getUsersFromIds = require("../utils/getUsernamesFromId");
+const Request = require("../models/Request");
 
 module.exports = async (req, res)  =>{
-    const  username = req.user.username;
     const friends = req.user.friends
 
-    console.log("username: ", username);
+    const duelRequests = await Request.find({
+        recipient: {
+            username: req.user.username,
+            id:  req.user.id
+        },
+        status: 1
+    })
+    if(!duelRequests) {
+        console.log("error");
+    }
+
+    console.log("username: ", req.user.username);
     console.log("current sessions user id: " + req.user._id);
-    
-    console.log("friends:\n", friends);
 
 	res.render("dashboard", {
-        username: username,
-        friends: friends
+        username: req.user.username,
+        friends: friends,
+        duelRequests: duelRequests
     });
 }

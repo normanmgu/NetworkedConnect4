@@ -4,16 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/game.css" rel="stylesheet" />
+    <link href="/js/game.js" rel="script" />
     <title>Game</title>
 </head>
 
 <body>
-    <h1>game</h1>
+    <h1>Connect 4</h1>
+    <h2 id="winner"></h2>
+    <div id="board">
+    </div>
 </body>
 
 <script src="/socket.io/socket.io.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.11.0/qs.min.js"></script>
 <script>
+
+    let game = new Game("joe", "ma'am");
+
     const socket = io();
+
+    const { transceiver, opp_username, opp_id, username, id } = Qs.parse(location.search, {
+        ignoreQueryPrefix: true
+    });
+    const room = transceiver === "requester" ? id + opp_id :opp_id + id;
+
+    socket.emit("joinRoom", { username, room })
+    socket.on("joinedRoom", (msg) =>{
+        console.log(msg);
+    })
+
 </script>
 
 </html>

@@ -17,11 +17,15 @@ const passport      = require("passport");
 const flash         = require("connect-flash");
 const methodOverride= require("method-override");
 const socketio      = require("socket.io");
-
+const url           = require("url");
 const app           = express();
 const httpserver    = http.createServer(app);
 const io            = socketio(httpserver);
-global.io = io; // "export" io globally so I can use it in the game controller
+
+module.exports = {
+    io,
+    url,
+};
 
 
 // Establish connection to MongoDB
@@ -67,15 +71,15 @@ const getRegisterPageController = require("./controllers/getRegister");
 const newUserController = require("./controllers/newUser");
 const getAddFriendController = require("./controllers/getAddFriend"); 
 const sendFriendRequestController = require("./controllers/sendFriendRequest");
-const pendingFriendRequestController = require("./controllers/pendingRequest");
+const pendingFriendRequestController = require("./controllers/pendingFriendRequest");
 const acceptRequestController = require("./controllers/requestResponseControllers/acceptFriendRequest");
 const rejectRequestController = require("./controllers/requestResponseControllers/rejectFriendRequest");
 const sendDuelRequestController = require("./controllers/sendDuelRequest");
-const gameController = require("./controllers/game");
+const acceptDuelRequestController = require("./controllers/requestResponseControllers/acceptDuelRequest");
+const gameController = require("./controllers/gameControllers/game");
 
 // CustomMiddleware
 const {isLoggedIn, isLoggedOut} = require("./middleware/isLoggedMiddleware");
-const { isPrivate } = require("ip");
 
 // ROUTES
 app.get('/',isLoggedIn, dashboardPageController);
@@ -87,6 +91,8 @@ app.get('/register', getRegisterPageController);
 app.get('/pendingRequests', isLoggedIn, pendingFriendRequestController);
 
 app.get('/game', isLoggedIn, gameController);
+
+app.post('/acceptDuelRequest', isLoggedIn, acceptDuelRequestController);
 
 app.post("/users/register", newUserController);
 

@@ -1,31 +1,31 @@
-const Request = require("../models/Request");
 const User = require("../models/User");
+const getPendingRequests = require("../utils/requestHelpers/pendingRequest");
 
 module.exports = async (req, res) =>{
 
-    const userID = req.user.id.toString();
-
-    //Detect pending request
-    let Requests = [];
+    console.log("MADE IT HERE")
+    let pendingRequests;
     try {
-        Requests = await Request.find( { recipient: {username: req.user.username, id: userID}, status: 0 } );
-        if(Requests.length === 0) throw Error("No Request");
+        pendingRequests = await getPendingRequests(
+            { username: req.user.username, id: req.user.id },
+            0
+        );
+        if(pendingRequests.length === 0) throw new Error("Ne Requests");
     }
     catch(e) {
         console.log(e);
-        res.render("pendingFriendRequest", {
+        return res.render("pendingFriendRequest", {
             users: null
-        })
+        });
     }
-
     // Render Friend Request to Client
     let users = []
     let i = 0
-    Requests.forEach(async (request) =>{
+    pendingRequests.forEach(async (request) =>{
         try {
             users.push(await User.findById(request.requester.id))
             i++;
-            if(i === Requests.length) {
+            if(i === pendingRequests.length) {
                 return res.render("pendingFriendRequest", {
                     users: users
                 })
