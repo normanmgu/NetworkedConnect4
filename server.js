@@ -26,6 +26,7 @@ module.exports = {
     io,
     url,
 };
+require("./controllers/gameControllers/gameSockets");
 
 
 // Establish connection to MongoDB

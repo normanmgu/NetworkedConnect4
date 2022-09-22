@@ -26,7 +26,7 @@ async function acceptRequest(recipientObj, requesterObj, requestType) {
         }
         else {
             console.log(
-                "Deleted user: " + docs
+                "Deleted document: " + docs
             );
             return true;
         }

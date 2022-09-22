@@ -17,7 +17,7 @@ module.exports = async (req, res) =>{
         if(!requestDeleted) throw new Error("Something went wrong.");
         // if user already has the friend
         req.user.friends.forEach((friend) =>{
-            if(friend.id === requesterId) {
+            if(friend.id === requester._id.toString()) {
                 throw Error(`Duplicate friend ${requester._id.toString()}`);
             }
         })

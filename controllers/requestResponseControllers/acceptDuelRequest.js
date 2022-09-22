@@ -7,7 +7,7 @@ module.exports = (req, res) =>{
 
     try{
         let request = acceptDuelRequest(
-            { username: req.user.username, id: req.user.username },
+            { username: req.user.username, id: req.user.id },
             { username: username, id: id },
             1
         )
