@@ -3,7 +3,6 @@ const getPendingRequests = require("../utils/requestHelpers/pendingRequest");
 
 module.exports = async (req, res) =>{
 
-    console.log("MADE IT HERE")
     let pendingRequests;
     try {
         pendingRequests = await getPendingRequests(

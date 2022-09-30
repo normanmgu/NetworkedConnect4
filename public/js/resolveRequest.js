@@ -1,3 +1,7 @@
+/**
+ * @param {String} id 
+ * @param {String} method GET || POST`
+ */
 async function resolveRequest(id, method) {
 
     id = id.trim();

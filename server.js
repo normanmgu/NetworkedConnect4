@@ -17,14 +17,12 @@ const passport      = require("passport");
 const flash         = require("connect-flash");
 const methodOverride= require("method-override");
 const socketio      = require("socket.io");
-const url           = require("url");
 const app           = express();
 const httpserver    = http.createServer(app);
 const io            = socketio(httpserver);
 
 module.exports = {
     io,
-    url,
 };
 require("./controllers/gameControllers/gameSockets");
 

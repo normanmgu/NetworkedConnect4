@@ -5,22 +5,21 @@ io.on("connection", (socket) =>{
     console.log(`socket ${socket.id} connected.`);
 
     socket.on("online", (userObj) =>{
+        userObj.id = socket.id;
         let user = userJoin(userObj);
-        console.log("Get users: " + getUsers());
 
         if(getUsers().length === 2){
             assignChipColor();
-            socket.emit("startGame", getUsers());
+            io.to(user.room).emit("startGame", getUsers());
         }
     })
 
     socket.on("disconnect", () =>{
-        let y = getCurrentUser(socket.id);
-        console.log(`Get current user: ${y}`);
-        let user = userLeave(socket.id)
-        console.log(user);
+        let user = getCurrentUser(socket.id);
+        console.log("!user disconnected " + user);
+        io.to(user.room).emit("disconnected", getUsers());
+        user = userLeave(socket.id)
         console.log(`User ${user.username} disconnected from the game`);
-        // TODO: emit event that stops the game and imforms the other user that their opponent disconnected
     })
 
     socket.on("joinRoom", ({ username, room }) =>{
@@ -28,6 +27,11 @@ io.on("connection", (socket) =>{
         console.log(room);
         socket.join(room);           
         socket.broadcast.to(room).emit("joinedRoom", `${username} joined room ${room}`)
+    })
+
+    socket.on("chipPlacedAlert", (data) =>{
+        console.log(data);
+        socket.broadcast.emit("chipPlaced", data);
     })
 
 })

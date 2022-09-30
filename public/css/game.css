@@ -32,3 +32,17 @@ body {
 .yellow-piece {
     background-color: yellow;
 }
+
+/* .fall {
+    animation-name: fall-animation;
+    animation-duration: 500ms;
+  }
+  
+@keyframes fall-animation {
+    from {
+      transform: translateY(-200px);
+    }
+    to {
+      transform: translateY(0);
+    }
+} */
