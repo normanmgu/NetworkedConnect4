@@ -10,6 +10,14 @@ function appendConnectionElement(users, status, opp_username) {
     document.body.appendChild(connectedElement);
 }
 
+function appendWin(user) {
+    console.log("made it in appendWin");
+    let winner = document.createElement("p");
+    winner.id = "winner";
+    winner.innerHTML = `${user} won!`;
+    document.getElementById("appendWinner").appendChild(winner);
+}
+
 /* _________________________________OBJECT DEFINITIONS ____________________________ */
 function Player(username, id, room, player){
     return {
@@ -119,6 +127,10 @@ socket.on("disconnected", (users) =>{
     appendConnectionElement(users, "disconnected", opp_username);
 })
 
+socket.on("winner", username =>{
+    appendWin(username.toString());
+})
+
 // returns new placement coordinates
 let isWin = {
     horizontalCase: function(board, player) {
@@ -157,7 +169,6 @@ let isWin = {
         return false;
     },
     diagnolAscendingCase: function(board, player) {
-        console.log("Made it in diagnolAscendingCase()");
         let count = 0;
         for(let k = 0; k < ROWS; k++) {
             let i = k;
@@ -183,6 +194,38 @@ let isWin = {
                 if(count === 4) return true;
                 i--;
                 j++;
+            }
+            count = 0;
+        }
+        return false;
+    },
+    diagnolDescendingCase: function(board, player) {
+        console.log("Made it in printDescendingDiagnol()");
+        let count = 0
+        for(let k = ROWS - 1; k >= 0; k--) {
+            let i = k;
+            let j = COLUMNS - 1;
+    
+            while(i >= 0) {
+                if(board[i][j] === player) count++;
+                else count = 0;
+                if(count === 4) return true;
+                i--;
+                j--;
+            }
+            count = 0;
+        }
+    
+        for(let k = COLUMNS - 2; k >= 0; k--) {
+            let i = ROWS -1;
+            let j = k;
+    
+            while(j >= 0) {
+                if(board[i][j] === player) count++;
+                else count = 0;
+                if(count === 4) return true;
+                i--;
+                j--;
             }
             count = 0;
         }
@@ -238,11 +281,13 @@ function addTileEventListener(tile) {
         chip: chip,
         player: currentPlayer.player 
     };
-    if(/*isWin.horizontalCase(board, currentPlayer.player) || isWin.verticalCase(board, currentPlayer.player
-        || */ isWin.diagnolAscendingCase(board, currentPlayer.player)) {
-        console.log(currentPlayer.username + " won!");
-    }
     socket.emit("chipPlacedAlert", data);
+
+    if(isWin.horizontalCase(board, currentPlayer.player) || isWin.verticalCase(board, currentPlayer.player)
+        ||  isWin.diagnolAscendingCase(board, currentPlayer.player) || isWin.diagnolDescendingCase(board, currentPlayer.player)) {
+        console.log(currentPlayer.username + " won!");
+        socket.emit("winnerDetected", currentPlayer.username);
+    }
 }
 
 // Returns the coordinates of where a chip would fall in place
