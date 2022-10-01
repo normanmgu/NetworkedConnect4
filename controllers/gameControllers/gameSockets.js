@@ -34,7 +34,7 @@ io.on("connection", (socket) =>{
         socket.broadcast.emit("chipPlaced", data);
     })
 
-    socket.on("detectedWinner", username =>{
+    socket.on("winnerDetected", username =>{
         io.emit("winner", username);
     })
 

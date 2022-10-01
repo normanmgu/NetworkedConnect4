@@ -28,6 +28,7 @@ function Player(username, id, room, player){
     }
 }
 
+const win = false;
 const ROWS = 6
 const COLUMNS = 7
 let P1 = null;
@@ -129,6 +130,7 @@ socket.on("disconnected", (users) =>{
 
 socket.on("winner", username =>{
     appendWin(username.toString());
+    win = true;
 })
 
 // returns new placement coordinates
@@ -234,6 +236,8 @@ let isWin = {
 }
 
 function addTileEventListener(tile) {
+
+    if(win) return;
     console.log(round);
     console.log(currentPlayer);
 
