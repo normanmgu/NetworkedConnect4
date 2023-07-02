@@ -7,7 +7,7 @@ NetworkedConnect4 is a networked Connect 4 game that features a login system and
 Requires the installation of MongoDB and Node.js.
 
 ```bash
-npm i "i dont know im just testing around lol"
+npm i 
 ```
 
 ## Usage
